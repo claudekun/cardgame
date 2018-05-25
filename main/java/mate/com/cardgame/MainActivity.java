@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //QUIT BUTTON
         else if (v.getId() == R.id.btn_quit) {
-            finish();
+            quit();
         }
 
         //PLAY AGAIN BUTTON
@@ -443,13 +443,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setMessage("Are you sure you want to quit this game?");
         builder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Intent intent = new Intent(MainActivity.this, StartActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
+                quit();
             }
         });
         builder.setNegativeButton("Cancel", null);
         builder.create().show();
+    }
+
+    private void quit() {
+        Intent intent = new Intent(MainActivity.this, StartActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
     }
 }
