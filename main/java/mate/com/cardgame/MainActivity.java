@@ -228,9 +228,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     //AFTER OPENING THE SECOND CARD, ANNOUNCE THE WINNER IN THE CURRENT ROUND
                     else {
-                        //CHECK IF THE ROUND HASN'T REACHED THE MAX
-                        if (current_round < 26)
-                            btn_next.setVisibility(View.VISIBLE);
 
                         //CHECK IF THE RESULT WAS DRAW
                         if (Integer.parseInt(iv_card1.getTag().toString())
@@ -277,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //SET FADING OUT ANIMATION
         final AlphaAnimation aa = new AlphaAnimation(1f, 0f);
-        aa.setDuration(1000);
+        aa.setDuration(500);
         aa.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -290,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tv_announce.setVisibility(View.INVISIBLE);
 
                 //CHECK IF THE CURRENT ROUND IS THE MAX
-                if (current_round == 26)
+                if (current_round == 26) {
                     if (players_score == ai_score) {
                         //CLOSE THE JUDGEMENT VIEW
                         showOrCloseJudgement("DRAW!", false);
@@ -303,6 +300,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             //IF NO, ANNOUNCE 'YOU LOSE'
                         else showOrCloseJudgement("YOU LOSE!", false);
                     }
+                } else { //SHOW NEXT ROUND BUTTON
+                    btn_next.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override
@@ -313,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //SET FADING IN ANIMATION
         AlphaAnimation aai = new AlphaAnimation(0f, 1f);
-        aai.setDuration(1000);
+        aai.setDuration(500);
 
         //AT THE END OF FADING IN ANIMATION
         aai.setAnimationListener(new Animation.AnimationListener() {
