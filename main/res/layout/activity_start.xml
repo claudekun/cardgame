@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/card_margin"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/aces" />
+        android:src="@drawable/aces" />
 
     <EditText
         android:textAllCaps="true"

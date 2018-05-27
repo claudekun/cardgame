@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,9 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     //USING BUTTERKNIFE
+    @BindView(R.id.iv_bg)
+    ImageView iv_bg;
+
     @BindView(R.id.iv_card1)
     ImageView iv_card1;
 
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //VARIABLE FOR COUNTING THE ROUNDS
     private int current_round = 1;
     private final int max_round = 26;
+    BitmapFactory.Options options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +107,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             players_name = getIntent().getExtras().getString(StartActivity.PNAME);
             tv_player.setText(players_name);
         }
+
+        //SET THE DECODED IMAGES FOR IMAGEVIEWS
+        //I HAVE TO DECODE IMAGES TO AVOID MEMORY LEAK
+        options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        options.inSampleSize = 3;
+        options.inJustDecodeBounds = false;
+
+        iv_bg.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.wood_bg, options));
+        iv_back1.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.purple_back, options));
+        iv_back2.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.blue_back, options));
 
         //METHOD FOR SHUFFLING THE CARDS
         shuffleCards();
@@ -412,10 +428,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //METHOD FOR FRAWING THE CARDS
     void drawCards() {
+
         //GET 2 RANDOM RESOURCE IDs FROM THE MULTIDIMENSIONAL ARRAY
         //AND SET TO THE IMAGEVIEWS
-        iv_card1.setImageResource(cards[0][0]);
-        iv_card2.setImageResource(cards[1][0]);
+        iv_card1.setImageBitmap(BitmapFactory.decodeResource(getResources(), cards[0][0], options));
+        iv_card2.setImageBitmap(BitmapFactory.decodeResource(getResources(), cards[1][0], options));
 
         //GET THE VALUE OF CARD FROM THE MULTIDIMENSIONAL ARRAY AND
         //TAG IT TO THE IMAGEVIEWS
